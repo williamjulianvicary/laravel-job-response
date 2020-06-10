@@ -1,0 +1,54 @@
+{
+    "name": "williamjulianvicary/laravel-job-response",
+    "description": "Add responses to Laravel Jobs - allowing your application to wait for a response from a dispatched job.",
+    "keywords": [
+        "williamjulianvicary",
+        "laravel-job-response"
+    ],
+    "homepage": "https://github.com/williamjulianvicary/laravel-job-response",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "William Julian-Vicary",
+            "email": "will@3whitehats.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Williamjulianvicary\\LaravelJobResponse\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Williamjulianvicary\\LaravelJobResponse\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Williamjulianvicary\\LaravelJobResponse\\LaravelJobResponseServiceProvider"
+            ],
+            "aliases": {
+                "LaravelJobResponse": "Williamjulianvicary\\LaravelJobResponse\\LaravelJobResponseFacade"
+            }
+        }
+    }
+}
