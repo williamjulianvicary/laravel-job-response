@@ -2,6 +2,6 @@
 
 All notable changes to `laravel-job-response` will be documented in this file
 
-## 1.0.0 - 201X-XX-XX
+## 0.1.0 - 2020-06-11
 
-- initial release
+- Initial release
