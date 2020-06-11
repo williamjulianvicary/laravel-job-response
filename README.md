@@ -68,7 +68,7 @@ class Service
         // $response is an instance of Response or ExceptionResponse
         $data = $response->getData(); // 'Success'
         // or 
-        $exception = $response->getException(); // JobFailedException
+        $exception = $response; // JobFailedException
     }
 }
 ```
@@ -89,7 +89,7 @@ class Service
         
         foreach ($responses as $response) {
             if ($response instanceof ExceptionResponse) {
-                echo "Exception: " . $response->getException()->getMessage() . "\n";
+                echo "Exception: " . $response->getMessage() . "\n";
             } else {
                 echo "Response: " . $response->getData() . "\n";
             }
@@ -137,7 +137,7 @@ class Service
            $responses = LaravelJobResponse::awaitResponses($jobs);
         } catch (JobFailedException $exception) {
             // One of the jobs failed.
-            $exception->getPrevious(); // The exception thrown by the job.
+            $exception->getTrace(); // The exception trace string thrown by the job.
         }       
        
     }

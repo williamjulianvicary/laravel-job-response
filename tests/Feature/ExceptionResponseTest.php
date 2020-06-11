@@ -38,6 +38,26 @@ class ExceptionResponseTest extends TestCase
         $response = app(TransportContract::class)->throwExceptionOnFailure(true)->awaitResponse($job->getResponseIdent(), 1);
     }
 
+    public function testThrowsJobFailedExceptionGetter()
+    {
+        try {
+            $job = new TestExceptionJob();
+            $job->prepareResponse();
+
+            app(Dispatcher::class)->dispatch($job);
+
+            Artisan::call('queue:work', [
+                '--once' => 1,
+            ]);
+
+            $response = app(TransportContract::class)->throwExceptionOnFailure(true)->awaitResponse($job->getResponseIdent(), 1);
+        } catch (JobFailedException $e) {
+            $exceptionResponse = $e->getExceptionResponse();
+        }
+
+        $this->assertInstanceOf(ExceptionResponse::class, $exceptionResponse);
+    }
+
     /**
      * @group failing
      */
@@ -52,9 +72,11 @@ class ExceptionResponseTest extends TestCase
             '--once' => 1,
         ]);
 
+        /** @var ExceptionResponse $response */
         $response = app(TransportContract::class)->throwExceptionOnFailure(false)->awaitResponse($job->getResponseIdent(), 1);
         $this->assertInstanceOf(ExceptionResponse::class, $response);
-        $this->assertInstanceOf(TestException::class, $response->getException());
+        $this->assertEquals('TestException', $response->getExceptionBaseName());
+        $this->assertEquals(TestException::class, $response->getExceptionClass());
     }
 
     /**

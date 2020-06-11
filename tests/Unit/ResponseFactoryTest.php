@@ -17,11 +17,10 @@ class ResponseFactoryTest extends TestCase
 
     public function testExceptionResponseReturned()
     {
-        $response = ['exception' => new TestException()];
+        $response = ['exception' => []];
 
         $response = ResponseFactory::create($response);
         $this->assertInstanceOf(ExceptionResponse::class, $response);
-        $this->assertInstanceOf(TestException::class, $response->getException());
     }
 
     public function testResponseReturned()

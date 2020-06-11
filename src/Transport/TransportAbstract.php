@@ -38,7 +38,7 @@ abstract class TransportAbstract
     {
         $response = ResponseFactory::create($responseData);
         if ($this->shouldThrowException && $response instanceof ExceptionResponse) {
-            throw JobFailedException::fromException($response->getException());
+            throw JobFailedException::fromExceptionResponse($response);
         }
 
         return $response;
@@ -75,8 +75,7 @@ abstract class TransportAbstract
      */
     public function handleFailure(string $id, \Throwable $exception): void
     {
-        $this->flattenExceptionBacktrace($exception);
-        $data = ['exception' => $exception];
+        $data = ['exception' => $this->exceptionToArray($exception)];
         $this->sendResponse($id, $data);
     }
 
@@ -92,46 +91,18 @@ abstract class TransportAbstract
 
     /**
      * @param \Throwable $exception
-     * @see https://gist.github.com/nh-mike/fde9f69a57bc45c5b491d90fb2ee08df
-     * @noinspection PhpDocMissingThrowsInspection
-     * @codeCoverageIgnore
+     * @return array
      */
-    private function flattenExceptionBacktrace(\Throwable $exception) {
-        if ($exception instanceof \Exception) {
-            $traceProperty = (new \ReflectionClass('Exception'))->getProperty('trace');
-        } else {
-            $traceProperty = (new \ReflectionClass('Error'))->getProperty('trace');
-        }
-        $traceProperty->setAccessible(true);
-
-        $flatten = function(&$value, $key) {
-            if ($value instanceof \Closure) {
-                $closureReflection = new \ReflectionFunction($value);
-                $value = sprintf(
-                    '(Closure at %s:%s)',
-                    $closureReflection->getFileName(),
-                    $closureReflection->getStartLine()
-                );
-            } elseif (is_object($value)) {
-                $value = sprintf('object(%s)', get_class($value));
-            } elseif (is_resource($value)) {
-                $value = sprintf('resource(%s)', get_resource_type($value));
-            }
-        };
-
-        $previousexception = $exception;
-        do {
-            if ($previousexception === NULL) {
-                break;
-            }
-            $exception = $previousexception;
-            $trace = $traceProperty->getValue($exception);
-            foreach($trace as &$call) {
-                array_walk_recursive($call['args'], $flatten);
-            }
-            $traceProperty->setValue($exception, $trace);
-        } while($previousexception = $exception->getPrevious());
-
-        $traceProperty->setAccessible(false);
+    private function exceptionToArray(\Throwable $exception): array
+    {
+        return [
+            'exception_class' => get_class($exception),
+            'exception_basename' => class_basename($exception),
+            'message' => $exception->getMessage(),
+            'file' => $exception->getFile(),
+            'code' => $exception->getCode(),
+            'trace' => $exception->getTraceAsString(),
+            'line' => $exception->getLine()
+        ];
     }
 }
