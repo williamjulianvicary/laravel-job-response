@@ -19,10 +19,20 @@
             <directory suffix=".php">src/</directory>
         </whitelist>
     </filter>
+
+    <php>
+        <env name="REDIS_CLIENT" value="predis"/>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_DATABASE" value="job_response"/>
+        <env name="DB_USERNAME" value="root"/>
+        <env name="DB_PASSWORD" value=""/>
+        <env name="APP_KEY" value="base64:W7fwlse03zHbUdbgeplikRxEh3HTMrhWS+dQzOJDDb0="/>
+    </php>
+
     <logging>
         <log type="tap" target="build/report.tap"/>
         <log type="junit" target="build/report.junit.xml"/>
-        <log type="coverage-html" target="build/coverage" charset="UTF-8" yui="true" highlight="true"/>
+        <log type="coverage-html" target="build/coverage" />
         <log type="coverage-text" target="build/coverage.txt"/>
         <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>

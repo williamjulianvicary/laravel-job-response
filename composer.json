@@ -16,11 +16,14 @@
         }
     ],
     "require": {
-        "php": "^7.1",
-        "illuminate/support": "^6.0"
+        "php": "^7.4",
+        "laravel/framework": "^7.0",
+        "ext-json": "*",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0",
+        "orchestra/testbench": "^5.0",
+        "orchestra/database": "^5.0",
         "phpunit/phpunit": "^8.0"
     },
     "autoload": {
