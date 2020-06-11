@@ -8,6 +8,7 @@ use Williamjulianvicary\LaravelJobResponse\Exceptions\JobFailedException;
 use Williamjulianvicary\LaravelJobResponse\Facades\LaravelJobResponse;
 use Williamjulianvicary\LaravelJobResponse\Tests\Data\TestException;
 use Williamjulianvicary\LaravelJobResponse\Tests\Data\TestExceptionJob;
+use Williamjulianvicary\LaravelJobResponse\Tests\Data\TestManuallyFailedJob;
 use Williamjulianvicary\LaravelJobResponse\Tests\TestCase;
 use Williamjulianvicary\LaravelJobResponse\Transport\TransportContract;
 
@@ -36,6 +37,24 @@ class ExceptionResponseTest extends TestCase
         ]);
 
         $response = app(TransportContract::class)->throwExceptionOnFailure(true)->awaitResponse($job->getResponseIdent(), 1);
+    }
+
+    public function testManuallyFailedJob()
+    {
+        $job = new TestManuallyFailedJob();
+        $job->prepareResponse();
+
+        app(Dispatcher::class)->dispatch($job);
+
+        Artisan::call('queue:work', [
+            '--once' => 1,
+        ]);
+
+        /** @var ExceptionResponse $response */
+        $response = app(TransportContract::class)->throwExceptionOnFailure(false)->awaitResponse($job->getResponseIdent(), 1);
+
+        $this->assertInstanceOf(ExceptionResponse::class, $response);
+        $this->assertNull($response->getMessage());
     }
 
     public function testThrowsJobFailedExceptionGetter()

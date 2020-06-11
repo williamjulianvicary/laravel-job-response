@@ -168,6 +168,13 @@ LaravelJobResponse::awaitResponses(array $jobs, $timeout=10);
 LaravelJobResponse::throwExceptionOnFailure(false);
 ```
 
+### Troubleshooting
+
+There are a few quirks within Laravel that you may run into with this package.
+
+- When running with a `sync` driver, Exceptions will not be caught - this is because Laravel does not natively catch them with the Sync driver
+and it is impossible for our package to pick them up. If you need to handle exceptions with this driver, use `$job->fail($exception);` instead.
+
 
 ### Testing
 

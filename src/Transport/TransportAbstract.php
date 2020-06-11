@@ -73,9 +73,10 @@ abstract class TransportAbstract
      * @param string $id
      * @param \Throwable $exception
      */
-    public function handleFailure(string $id, \Throwable $exception): void
+    public function handleFailure(string $id, ?\Throwable $exception = null): void
     {
-        $data = ['exception' => $this->exceptionToArray($exception)];
+        $exceptionData = $exception instanceof \Throwable ? $this->exceptionToArray($exception) : [];
+        $data = ['exception' => $exceptionData];
         $this->sendResponse($id, $data);
     }
 

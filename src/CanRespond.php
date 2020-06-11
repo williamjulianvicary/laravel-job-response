@@ -19,7 +19,7 @@ trait CanRespond
         return $this;
     }
 
-    public function failed(\Throwable $exception): void
+    public function failed(?\Throwable $exception = null): void
     {
         $this->respondWithException($exception);
     }
@@ -32,7 +32,7 @@ trait CanRespond
         app(TransportContract::class)->respond($this->getResponseIdent(), $data);
     }
 
-    public function respondWithException(\Throwable $exception): void
+    public function respondWithException(?\Throwable $exception = null): void
     {
         app(TransportContract::class)->handleFailure($this->getResponseIdent(), $exception);
     }
