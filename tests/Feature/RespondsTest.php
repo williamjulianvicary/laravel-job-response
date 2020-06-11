@@ -33,7 +33,7 @@ class RespondsTest extends TestCase
         ]);
 
         $response = app(TransportContract::class)->awaitResponse($job->getResponseIdent(), 1);
-        $this->assertEquals(true, $response->getData()['response']);
+        $this->assertEquals(true, $response->getData());
     }
 
     /**

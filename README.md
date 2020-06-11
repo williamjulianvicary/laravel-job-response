@@ -2,7 +2,6 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/williamjulianvicary/laravel-job-response.svg?style=flat-square)](https://packagist.org/packages/williamjulianvicary/laravel-job-response)
 [![Build Status](https://img.shields.io/travis/williamjulianvicary/laravel-job-response/master.svg?style=flat-square)](https://travis-ci.org/williamjulianvicary/laravel-job-response)
-[![Quality Score](https://img.shields.io/scrutinizer/g/williamjulianvicary/laravel-job-response.svg?style=flat-square)](https://scrutinizer-ci.com/g/williamjulianvicary/laravel-job-response)
 [![Total Downloads](https://img.shields.io/packagist/dt/williamjulianvicary/laravel-job-response.svg?style=flat-square)](https://packagist.org/packages/williamjulianvicary/laravel-job-response)
 
 Have you ever needed to run a Laravel job (or multiple jobs), wait for the response and then use that response? This is exactly the functionality this package provides. 
