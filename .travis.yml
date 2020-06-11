@@ -3,12 +3,17 @@ language: php
 php:
   - 7.4
 
+services:
+    - redis-server
+    - mysql
+
 env:
   matrix:
     - COMPOSER_FLAGS="--prefer-lowest"
     - COMPOSER_FLAGS=""
 
 before_script:
+  - mysql -e 'CREATE DATABASE job_response;'    
   - travis_retry composer self-update
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
