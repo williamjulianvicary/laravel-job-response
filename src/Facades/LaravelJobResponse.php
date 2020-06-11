@@ -1,13 +1,10 @@
 <?php
 
-namespace Williamjulianvicary\LaravelJobResponse;
+namespace Williamjulianvicary\LaravelJobResponse\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-/**
- * @see \Williamjulianvicary\LaravelJobResponse\Skeleton\SkeletonClass
- */
-class LaravelJobResponseFacade extends Facade
+class LaravelJobResponse extends Facade
 {
     /**
      * Get the registered name of the component.
