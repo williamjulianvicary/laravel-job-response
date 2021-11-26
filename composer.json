@@ -16,8 +16,8 @@
         }
     ],
     "require": {
-        "php": "^8.0|^7.4",
-        "laravel/framework": "^8.0",
+        "php": "^7.4.0 | ^8.0.0",
+        "laravel/framework": "^7.8.0 | ^8.0.0",
         "ext-json": "*",
         "predis/predis": "^1.1"
     },
