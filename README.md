@@ -16,8 +16,8 @@ composer require williamjulianvicary/laravel-job-response
 
 ## Requirements
 
-- PHP >= 7.4
-- Laravel >= 7.0 (While not tested on prior versions may work)
+- PHP >= 8.1
+- Laravel >= 9.0 (While not tested on prior versions may work)
 
 ## Usage
 
