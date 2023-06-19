@@ -17,7 +17,7 @@ class CacheTransportTest extends TestCase
 
     public function testExceptionThrownForIncorrectStoreType()
     {
-        Config::set('cache.default', 'file');
+        Config::set('cache.default', 'apc');
         $this->expectException(\InvalidArgumentException::class);
         new CacheTransport();
     }
